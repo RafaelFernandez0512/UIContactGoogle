@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+               xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:converts="clr-namespace:UIContactsApp.Converters"
+             x:Class="UIContactsApp.Views.PrincipalPage.PresentContactPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converts:StringToColorHex x:Key="StringToColorHexKey"/>
+            <Style TargetType="Label" x:Key="LabelBoxView">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Padding="0,0,0,10" ColumnSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="3"/>
+                </Grid.ColumnDefinitions>
+                <BoxView
+                    Grid.RowSpan="3"
+                    Grid.ColumnSpan="7"
+                      BackgroundColor="{Binding Person.FrameColor,Converter={StaticResource StringToColorHexKey}}"/>
+                <Image Grid.Row="0"
+                       Grid.RowSpan="2"
+                   Grid.ColumnSpan="7"
+                       Aspect="AspectFill"
+                      
+                    Source="{Binding Person.ImagePerson}"
+                   />
+                <ImageButton Grid.Row="0"
+                             Grid.Column="3"
+                             Source="{Binding FavoriteImage}"
+                             Command="{Binding FavoritePersonCommand}"
+                             BackgroundColor="Transparent"
+                             />
+                <ImageButton Grid.Row="0"
+                             Grid.Column="4"
+                            Source="ic_action_mode_edit.png"
+                             BackgroundColor="Transparent"
+                                 Command="{Binding EditPersonCommand}"/>
+
+
+
+                <Label
+                     Grid.Row="2"
+                     Grid.ColumnSpan="7"
+                     Style="{StaticResource LabelBoxView}"
+                    Text="{Binding FullName}" 
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontSize="40"/>
+                <BoxView BackgroundColor="White"
+                         Grid.Column="1"
+                      Grid.Row="3"
+                     Grid.RowSpan="7"
+                     Grid.ColumnSpan="5"/>
+
+                <Image Grid.Row="3"
+                       Grid.Column="1"
+                       Source="PhoneImage.png"/>
+
+                <Label Grid.Row="3"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="4"
+                  
+                   Style="{StaticResource LabelBoxView}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span  Text="{Binding Person.Phone,FallbackValue='Phone'}"/>
+                            <Span Text="{x:Static system:Environment.NewLine}"/>
+                            <Span Text="Movil"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Image Grid.Column="5"
+                   Grid.Row="4"
+                   Source="EmailImge.png"/>
+
+                <Label BackgroundColor="LightGray"
+                       Grid.Row="4"
+                       Grid.Column="2"
+                       Grid.ColumnSpan="4"
+                       />
+                
+                <Image Grid.Row="5"
+                       Grid.Column="1"
+                      Source="EditImage.png"/>
+
+                <Label 
+                    Grid.Row="5"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="4"
+                   Text="{Binding Person.Phone, StringFormat='Call to {0}'}"
+                   Style="{StaticResource LabelBoxView}"/>
+                <Label BackgroundColor="LightGray"
+                       Grid.Row="6"
+                       Grid.Column="2"
+                       Grid.ColumnSpan="4"
+                       />
+                <Image Grid.Row="7"
+                       Grid.Column="1"
+                       Source="EditImage.png"/>
+                <Label 
+                    Grid.Row="7"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="4"
+                    Text="{Binding Person.Phone, StringFormat='CallVideo to {0}'}"
+                     Style="{StaticResource LabelBoxView}"/>
+                <Label BackgroundColor="LightGray"
+                       Grid.Row="8"
+                       Grid.Column="2"
+                       Grid.ColumnSpan="4"
+                       />
+                <Image Grid.Row="9"
+                       Grid.Column="1"
+                       Source="EditImage.png"/>
+                <Label 
+                    Grid.Row="9"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="4"
+                    Text="{Binding Person.Phone, StringFormat='Message sent to {0}'}"
+                    Style="{StaticResource LabelBoxView}"/>
+
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

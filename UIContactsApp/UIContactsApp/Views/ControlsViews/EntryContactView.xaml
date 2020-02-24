@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="UIContactsApp.Views.ControlsViews.EntryContactView"
+             x:Name="this">
+  <ContentView.Content>
+        <Grid BindingContext="{x:Reference this}"
+              Padding="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image Source="{Binding ImageEntry}"
+                   Grid.Column="0"
+                   Grid.Row="0"/>
+            <Entry Placeholder="{Binding PlaceHolderEntry,FallbackValue='PlaceHolder'}"
+                   x:Name="NameEntry"
+                   Text="{Binding TextEntry}"
+                   Keyboard="{Binding KeyboardEntry}"
+                Grid.Column="1"
+                   Grid.Row="0"/>
+            <Button x:Name="DowntoUpButton"
+                    Grid.Column="2"
+                    ImageSource="ic_keyboard_arrow_down"
+                    BackgroundColor="Transparent"
+                    IsVisible="{Binding IsVisibleCommand,FallbackValue='False'}"
+                    Command="{Binding NameFieldsCommand}"
+                    Grid.Row="0"
+                    />
+            <StackLayout Grid.Row="1"
+                         x:Name="IsVisibleEntrys"
+                         Grid.Column="1"
+                         IsVisible="False">
+                <Entry Placeholder="{Binding PlaceHolderEntry,FallbackValue='PlaceHolder'}"
+                   x:Name="PrefixEntry"
+                   Text="{Binding PrefixTextEntry}"
+                   Keyboard="{Binding KeyboardEntry}"/>
+                <Entry Placeholder="Segundo nombre"
+                       Text="{Binding SecondTextEntry}"
+                    x:Name="XSegundoN"/>
+            </StackLayout>
+
+        </Grid>
+  </ContentView.Content>
+</ContentView>

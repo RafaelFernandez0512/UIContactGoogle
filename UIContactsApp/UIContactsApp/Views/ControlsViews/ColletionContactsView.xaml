@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converter="clr-namespace:UIContactsApp.Converters"
+             xmlns:controlsviews="clr-namespace:UIContactsApp.Views.ControlsViews"
+             mc:Ignorable="d"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             x:Class="UIContactsApp.Views.ControlsViews.ColletionContactsView"
+             x:Name="this">
+    <ContentView.Resources>
+        <converter:StringToColorHex x:Key="StringToColorHexKey"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+       
+            
+            <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                         Command="{Binding RefreshCommand}"
+                           Margin="20"
+                         >
+                
+                <StackLayout>
+
+                    <controlsviews:FavoriteColletionView
+                        HeightRequest="100"/>
+                <Label BackgroundColor="LightGray"  
+                           HeightRequest="1"
+                           TranslationY="-20"/>
+                <CollectionView ItemsSource="{Binding GroupsContacts}"
+                                IsGrouped="True"
+                                    VerticalScrollBarVisibility="Always" 
+                                android:ListView.IsFastScrollEnabled="true">
+                    <CollectionView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding NameLetter}"
+                   TextColor="#4285F4"
+                   FontSize="30" />
+                        </DataTemplate>
+                    </CollectionView.GroupHeaderTemplate>
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout VerticalItemSpacing="2"
+                                       Orientation="Vertical"  />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <SwipeView.LeftItems>
+                                    <SwipeItems Mode="Reveal"
+                                                >
+                                        <SwipeItem IconImageSource="papelera" 
+                                                   BackgroundColor="{Binding FrameColor, Converter={StaticResource StringToColorHexKey}}"
+                                                   Command="{Binding Path= BindingContext.DeletePersonCommad, Source={x:Reference this}}"
+                                                   CommandParameter="{Binding .}"/>
+                                        <SwipeItem IconImageSource="PencilImage" 
+                                                   BackgroundColor="{Binding FrameColor, Converter={StaticResource StringToColorHexKey}}"
+                                                   Command="{Binding Path= BindingContext.EditPersonCommand, Source={x:Reference this}}"
+                                               CommandParameter="{Binding .}"/>
+                                    </SwipeItems>
+
+                                </SwipeView.LeftItems>
+                                <SwipeView.RightItems>
+                                    <SwipeItem IconImageSource="PhoneImage"
+                                                BackgroundColor="{Binding FrameColor, Converter={StaticResource StringToColorHexKey}}"
+                                                 Command="{Binding Path= BindingContext.CallPersonCommand, Source={x:Reference this}}"
+                                          CommandParameter="{Binding Phone}"/>
+                                </SwipeView.RightItems>
+                                <Grid Padding="10" ColumnSpacing="20">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Frame  Grid.Column="0"
+                                    CornerRadius="80"
+                                    BackgroundColor="{Binding FrameColor, Converter={StaticResource StringToColorHexKey}}">
+
+                                    </Frame>
+                                    <ImageButton Source="{Binding ImagePerson}"
+                                       HeightRequest="100"
+                                       BackgroundColor="Transparent"
+                                       Aspect="Fill" CornerRadius="80"/>
+                                    <Label Text="{Binding FullName}"  
+                                                Grid.Column="1"
+                                              FontSize="20"
+                                                VerticalOptions="CenterAndExpand"
+                                                TextColor="Black"/>
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+            </RefreshView>
+
+    </ContentView.Content>
+</ContentView>

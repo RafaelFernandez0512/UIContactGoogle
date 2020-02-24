@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:templatesviews="clr-namespace:UIContactsApp.Views.ControlsViews"
+             xmlns:converters="clr-namespace:UIContactsApp.Converters"
+             mc:Ignorable="d"
+             x:Class="UIContactsApp.Views.PrincipalPage.RegisterContactPage"
+             Title="New Contact">
+    <ContentPage.Resources>
+        <converters:StringToColorHex x:Key="StringToColorHexKey"/>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save"
+                     Command="{Binding SaveCommand}"
+                     Priority="0"
+                     Order="Primary"/>
+    </ContentPage.ToolbarItems>
+        <ContentPage.Content>
+        <ScrollView>
+            <StackLayout >
+                <Grid BackgroundColor="{Binding Person.FrameColor,Converter={StaticResource StringToColorHexKey}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <Image  HeightRequest="200"
+                                Grid.ColumnSpan="2"
+                                x:Name="ImagePhoto"
+                       Source="{Binding Person.ImagePerson}"/>
+                        <Image Grid.Column="1" Source="ImageCamara" VerticalOptions="EndAndExpand"/>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding TakePhotoCommand}"
+                                              NumberOfTapsRequired="1"
+                                              />
+                    </Grid.GestureRecognizers>
+                </Grid>
+
+                    <templatesviews:EntryContactView PlaceHolderEntry="Name"
+                                                 IsVisibleCommand="True"
+                                                 TextEntry="{Binding Person.NamePerson,Mode=TwoWay}"
+                                                 ImageEntry="ImageUsers"
+                                                 SecondTextEntry="{Binding Person.SecondName, Mode=TwoWay}"
+                                                 PrefixTextEntry="{Binding Person.NickName, Mode=TwoWay}"/>
+                
+                <templatesviews:EntryContactView PlaceHolderEntry="LastName"
+                                                 TextEntry="{Binding Person.Lastname, Mode=TwoWay}"/>
+                <templatesviews:EntryContactView PlaceHolderEntry="Phone"
+                                                 KeyboardEntry="Numeric"
+                                                 ImageEntry="ImagePhoneEntry"
+                                                 TextEntry="{Binding Person.Phone, Mode=TwoWay}"/>
+                <templatesviews:EntryContactView PlaceHolderEntry="Email"
+                                                 ImageEntry="EmailBlackIamage"
+                                                 TextEntry="{Binding Person.Email, Mode=TwoWay}"/>
+                <!-- More fields -->
+                <Button Text="More fields"
+                       FontSize="16"
+                        TextColor="DarkBlue"
+                        BackgroundColor="Transparent" 
+                        IsVisible="{Binding IsVisibleCommand}"
+                        Command="{Binding MoreFieldsCommand}"/>
+                <templatesviews:EntryContactView PlaceHolderEntry="Empresa"
+                                                 IsVisible="{Binding IsVisible}"
+                                                 TextEntry="{Binding Person.NameBusiness, Mode=TwoWay}"/>
+                <templatesviews:EntryContactView PlaceHolderEntry="Location"
+                                                 ImageEntry="LocationImage"
+                                                 IsVisible="{Binding IsVisible}"
+                                                 TextEntry="{Binding Person.Location, Mode=TwoWay}"/>
+                <templatesviews:EntryContactView PlaceHolderEntry="Web site"
+                                                 IsVisible="{Binding IsVisible}"
+                                                 ImageEntry="WebsiteImage"
+                                                 TextEntry="{Binding Person.WebSite, Mode=TwoWay}"/>
+                <DatePicker  IsVisible="{Binding IsVisible}"
+                             Margin="40,0,40,0"
+                             Date="{Binding Person.DateOfBirth}"/>
+                <templatesviews:EntryContactView PlaceHolderEntry="Note"
+                                                 ImageEntry="EditImage"
+                                                 IsVisible="{Binding IsVisible}"
+                                                 TextEntry="{Binding Person.Note, Mode=TwoWay}"/>
+                <templatesviews:EntryContactView PlaceHolderEntry="Relationship"
+                                                 IsVisible="{Binding IsVisible}"
+                                                 TextEntry="{Binding Person.Relationship, Mode=TwoWay}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

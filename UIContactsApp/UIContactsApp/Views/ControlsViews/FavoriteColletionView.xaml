@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converts="clr-namespace:UIContactsApp.Converters"
+             mc:Ignorable="d"
+             x:Class="UIContactsApp.Views.ControlsViews.FavoriteColletionView">
+    <ContentView.Resources>
+        <converts:StringToColorHex x:Key="StringToColorHexKey"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <CollectionView ItemsSource="{Binding FavoritePersons}"
+                        SelectedItem="{Binding SelectPerson}"
+                        SelectionMode="Single"
+                       >
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                                 Orientation="Horizontal" 
+                    HorizontalItemSpacing="20"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Grid Padding="10" ColumnSpacing="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+                            <Frame  Grid.Column="0"
+                                Grid.Row="0"
+                                    CornerRadius="80"
+                                    BackgroundColor="{Binding FrameColor, Converter={StaticResource StringToColorHexKey}}">
+
+                            </Frame>
+                            <ImageButton Source="{Binding ImagePerson}"
+                                     Grid.Row="0"
+                                       BackgroundColor="Transparent"
+                                       Aspect="Fill" CornerRadius="80"/>
+                            <Label Text="{Binding NamePerson}" 
+                               Grid.Row="1"
+                               FontSize="14"
+                               HorizontalOptions="CenterAndExpand"
+                               TextColor="Black"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+    </ContentView.Content>
+</ContentView>

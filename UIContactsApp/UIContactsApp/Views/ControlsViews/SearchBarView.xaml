@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="UIContactsApp.Views.ControlsViews.SearchBarView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame">
+                <Setter Property="Opacity" Value="0.8"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Frame CornerRadius="20" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="ic_action_menu.png"
+                       HeightRequest="60"
+                    Grid.Column="0"
+                       />
+                    <SearchBar x:Name="searchBar"
+                               Grid.Row="0"
+                               Grid.Column="1"
+                   SearchCommand="{Binding FilterCommand}"
+                   SearchCommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
+                   Placeholder="Search" />
+
+                    <ImageButton  Source="BarCodeImage.png"
+                                  Grid.Column="2"
+                     Command="{Binding ScannerCommand}"
+                          BackgroundColor="Transparent"/>
+
+            </Grid>
+        </Frame>
+    </ContentView.Content>
+</ContentView>
