@@ -12,15 +12,19 @@
              NavigationPage.HasNavigationBar="False"
              >
     <ContentPage.Resources>
-        <converter:StringToColorHex x:Key="StringToColorHexKey"/>
+        <ResourceDictionary>
+            <Style TargetType="ImageButton" x:Key="ButtonaddKey">
+                
+            </Style>
+            <converter:StringToColorHex x:Key="StringToColorHexKey"/>
+        </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid Padding="0,10,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ScrollView Grid.Row="0">
-                <Grid>
+            <Grid Grid.Row="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70"/>
                         <RowDefinition Height="*"/>
@@ -37,15 +41,15 @@
                     <controlsviews:ColletionContactsView
                         Grid.Row="1"/>
                 </Grid>
-            </ScrollView>
-            <Button Grid.Row="0" 
+                <Button Grid.Row="0" 
                      Style="{StaticResource ButtonAddContact}"
                     ImageSource="ic_add.png"
                     Command="{Binding AddPersonCommad}"
                     HorizontalOptions="End" 
                     WidthRequest="60"
                     HeightRequest="60" 
-Margin="0,0,20,22" VerticalOptions="End"/>
+                    Margin="0,0,20,22" 
+                     VerticalOptions="End"/>
 
         </Grid>
 

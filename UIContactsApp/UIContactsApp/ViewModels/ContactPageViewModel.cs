@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -20,8 +21,9 @@ namespace UIContactsApp.ViewModels
         public ICommand RefreshCommand { get; set; }
         public ICommand CallPersonCommand { get; set; }
         public ICommand ScannerCommand { get; set; }
+         List<GroupsContact> _Groups;
         public ObservableCollection<Person> FavoritePersons { get; set; }
-        public ObservableCollection<GroupsContact> GroupsContacts { get; set; }
+        public ObservableCollection<GroupsContact> GroupsContacts { get; set; } = new ObservableCollection<GroupsContact>();
 
         private Person selectPerson;
 
@@ -52,7 +54,6 @@ namespace UIContactsApp.ViewModels
         }
         public ContactPageViewModel()
         {
-
             ReloadList();
             LoadFavoritePerson();
             IsRefreshing = false;
@@ -63,8 +64,10 @@ namespace UIContactsApp.ViewModels
             EditPersonCommand = new Command<Person>(EditSelectPerson);
             RefreshCommand = new Command((param) =>
             {
+                IsRefreshing = true;
                 ReloadList();
                 LoadFavoritePerson();
+                IsRefreshing = false;
             });
             DeletePersonCommad = new Command(async (param) =>
             {
@@ -88,36 +91,19 @@ namespace UIContactsApp.ViewModels
 
         public async void ReloadList()
         {
-            IsRefreshing = true;
-            GroupsContacts = new ObservableCollection<GroupsContact>()
+            _Groups = new List<GroupsContact>();
+            char[] letter = Enumerable.Range('A', 26).Select(x => (char)x).ToArray();
+            foreach (var az in letter)
             {
-                new GroupsContact("A",new List<Person>(await App.PersonDB.GetGroupsItems("A"))),
-                new GroupsContact("B",new List<Person>(await App.PersonDB.GetGroupsItems("B"))),
-                new GroupsContact("C",new List<Person>(await App.PersonDB.GetGroupsItems("C"))),
-                new GroupsContact("D",new List<Person>(await App.PersonDB.GetGroupsItems("D"))),
-                new GroupsContact("F",new List<Person>(await App.PersonDB.GetGroupsItems("F"))),
-                new GroupsContact("G",new List<Person>(await App.PersonDB.GetGroupsItems("G"))),
-                new GroupsContact("H",new List<Person>(await App.PersonDB.GetGroupsItems("H"))),
-                new GroupsContact("I",new List<Person>(await App.PersonDB.GetGroupsItems("I"))),
-                new GroupsContact("J",new List<Person>(await App.PersonDB.GetGroupsItems("J"))),
-                new GroupsContact("K",new List<Person>(await App.PersonDB.GetGroupsItems("K"))),
-                new GroupsContact("M",new List<Person>(await App.PersonDB.GetGroupsItems("M"))),
-                new GroupsContact("N",new List<Person>(await App.PersonDB.GetGroupsItems("N"))),
-                new GroupsContact("Ñ",new List<Person>(await App.PersonDB.GetGroupsItems("Ñ"))),
-                new GroupsContact("O",new List<Person>(await App.PersonDB.GetGroupsItems("O"))),
-                new GroupsContact("P",new List<Person>(await App.PersonDB.GetGroupsItems("P"))),
-                new GroupsContact("Q",new List<Person>(await App.PersonDB.GetGroupsItems("Q"))),
-                new GroupsContact("R",new List<Person>(await App.PersonDB.GetGroupsItems("R"))),
-                new GroupsContact("S",new List<Person>(await App.PersonDB.GetGroupsItems("S"))),
-                new GroupsContact("T",new List<Person>(await App.PersonDB.GetGroupsItems("T"))),
-                new GroupsContact("U",new List<Person>(await App.PersonDB.GetGroupsItems("U"))),
-                new GroupsContact("V",new List<Person>(await App.PersonDB.GetGroupsItems("V"))),
-                new GroupsContact("W",new List<Person>(await App.PersonDB.GetGroupsItems("W"))),
-                new GroupsContact("X",new List<Person>(await App.PersonDB.GetGroupsItems("X"))),
-                new GroupsContact("Y",new List<Person>(await App.PersonDB.GetGroupsItems("Y"))),
-                new GroupsContact("A",new List<Person>(await App.PersonDB.GetGroupsItems("Z")))
-            };
-            IsRefreshing = false;
+                _Groups.Add(new GroupsContact(az.ToString(),new List<Person>(await App.PersonDB.GetGroupsItems(az.ToString()))));
+            }
+            ListNotEmpty();
+        }
+        public void ListNotEmpty()
+        {
+
+            var listNoEmpty =( from groups in _Groups where groups.Any() == true select groups).ToList();
+            GroupsContacts = new ObservableCollection<GroupsContact>(listNoEmpty);
         }
         public async void LoadFavoritePerson()
         {
@@ -125,11 +111,12 @@ namespace UIContactsApp.ViewModels
             FavoritePersons = new ObservableCollection<Person>(await App.PersonDB.FavoritePersonAsync());
             IsRefreshing = false;
         }
-        public async void FindPerson(string find)
+        public  void FindPerson(string find)
         {
-            GroupsContacts = new ObservableCollection<GroupsContact>() {
-            new GroupsContact(find[0].ToString(),new List<Person>(await App.PersonDB.FindItemsAsync(find)))
-            };
+            CultureInfo ci = new CultureInfo("es-MX");
+            find = ci.TextInfo.ToTitleCase(find);
+            var listNoEmpty = (from groups in GroupsContacts where groups.ToList().Exists(e=>e.NamePerson.Contains(find))select groups).ToList();
+            GroupsContacts =  new ObservableCollection<GroupsContact>(listNoEmpty); ;
         }
         public async void EditSelectPerson(Person person)
         {

@@ -14,9 +14,13 @@ namespace UIContactsApp
         private static PersonDB personDB;
         public static PersonDB PersonDB
         {
-            get => personDB == null ? new PersonDB(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Person.db3")) : personDB;
-
-            set => personDB = value;
+            get {
+                if (personDB == null)
+                {
+                    personDB =new PersonDB();
+                }
+                return personDB;
+            }
         }
         public App()
         {
@@ -27,7 +31,7 @@ namespace UIContactsApp
                 "CarouselView_Experimental",
                 "IndicatorView_Experimental"
             });
-            MainPage = new NavigationPage(new ContactMasterDetailPage());
+            MainPage = new NavigationPage(new ContactPage());
         }
 
         protected override void OnStart()

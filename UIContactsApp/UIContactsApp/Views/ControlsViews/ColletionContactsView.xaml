@@ -13,28 +13,26 @@
         <converter:StringToColorHex x:Key="StringToColorHexKey"/>
     </ContentView.Resources>
     <ContentView.Content>
-       
-            
-            <RefreshView IsRefreshing="{Binding IsRefreshing}"
+        <RefreshView IsRefreshing="{Binding IsRefreshing}"
                          Command="{Binding RefreshCommand}"
                            Margin="20"
                          >
-                
-                <StackLayout>
+            <StackLayout>
 
                     <controlsviews:FavoriteColletionView
-                        HeightRequest="100"/>
+                        HeightRequest="160"/>
                 <Label BackgroundColor="LightGray"  
                            HeightRequest="1"
-                           TranslationY="-20"/>
+                           TranslationY="-5"/>
                 <CollectionView ItemsSource="{Binding GroupsContacts}"
                                 IsGrouped="True"
-                                    VerticalScrollBarVisibility="Always" 
-                                android:ListView.IsFastScrollEnabled="true">
+                                ItemsUpdatingScrollMode="KeepItemsInView"
+                                    VerticalScrollBarVisibility="Always" >
                     <CollectionView.GroupHeaderTemplate>
                         <DataTemplate>
                             <Label Text="{Binding NameLetter}"
                    TextColor="#4285F4"
+                                   IsVisible="{Binding IsEmptyList}"
                    FontSize="30" />
                         </DataTemplate>
                     </CollectionView.GroupHeaderTemplate>
@@ -42,7 +40,17 @@
                         <GridItemsLayout VerticalItemSpacing="2"
                                        Orientation="Vertical"  />
                     </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <StackLayout>
+                            <Label Text="Not found."
+                       Margin="10,25,10,10"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       HorizontalOptions="Fill"
+                       HorizontalTextAlignment="Center" />
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate >
                         <DataTemplate>
                             <SwipeView>
                                 <SwipeView.LeftItems>
@@ -65,7 +73,7 @@
                                                  Command="{Binding Path= BindingContext.CallPersonCommand, Source={x:Reference this}}"
                                           CommandParameter="{Binding Phone}"/>
                                 </SwipeView.RightItems>
-                                <Grid Padding="10" ColumnSpacing="20">
+                                <Grid Padding="10" ColumnSpacing="20" >
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="40" />
                                     </Grid.RowDefinitions>

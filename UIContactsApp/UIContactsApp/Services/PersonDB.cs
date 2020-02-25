@@ -2,21 +2,40 @@
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UIContactsApp.AppServices;
 using UIContactsApp.Models;
+using UIContactsApp.Services;
 
 namespace ContactUIAndroid.App.Services
 {
     public class PersonDB : IPersonDB
     {
-        readonly SQLiteAsyncConnection database;
-        public PersonDB(string path)
+        static readonly Lazy<SQLiteAsyncConnection> lazyInitializer = new Lazy<SQLiteAsyncConnection>(() =>
         {
-            this.database = new SQLiteAsyncConnection(path);
-            this.database.CreateTableAsync<Person>().Wait();
+            return new SQLiteAsyncConnection(ConstantDB.DatabasePath, ConstantDB.Flags);
+        });
+        static SQLiteAsyncConnection database => lazyInitializer.Value;
+        static bool initialized = false;
+        public PersonDB()
+        {
+            InitializeAsync().SafeFireAndForget(false);
         }
+
+        async Task InitializeAsync()
+        {
+            if (!initialized)
+            {
+                if (!database.TableMappings.Any(m => m.MappedType.Name == typeof(Person).Name))
+                {
+                    await database.CreateTablesAsync(CreateFlags.None, typeof(Person)).ConfigureAwait(false);
+                    initialized = true;
+                }
+            }
+        }
+
         public Task<int> DeleteItemAsync(Person person)
         {
             return database.DeleteAsync(person);

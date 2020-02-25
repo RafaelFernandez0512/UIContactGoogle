@@ -23,14 +23,14 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
 
-                        <Grid Padding="10" ColumnSpacing="20">
+                        <Grid Padding="10" ColumnSpacing="20" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50" />
                                 <RowDefinition Height="30" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50"/>
-                            </Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
                             <Frame  Grid.Column="0"
                                 Grid.Row="0"
                                     CornerRadius="80"
@@ -44,7 +44,7 @@
                             <Label Text="{Binding NamePerson}" 
                                Grid.Row="1"
                                FontSize="14"
-                               HorizontalOptions="CenterAndExpand"
+                               HorizontalOptions="StartAndExpand"
                                TextColor="Black"/>
                         </Grid>
                     </DataTemplate>

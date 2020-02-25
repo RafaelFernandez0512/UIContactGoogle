@@ -7,13 +7,23 @@
              x:Class="UIContactsApp.App">
     <Application.Resources>
         <ResourceDictionary>
+            <OnPlatform x:Key="RegularSize"
+                        x:TypeArguments="x:Int32"
+                        Android="60"
+                        iOS="80" />
+            <OnPlatform x:Key="RegularCornerRadius"
+                        x:TypeArguments="x:Int32"
+                        Android="40"
+                        iOS="50" />
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="#4285F4"/>
                 <Setter Property="BarTextColor" Value="White"/>
             </Style>
             <Style TargetType="Button" x:Key="ButtonAddContact">
                 <Setter Property="BackgroundColor" Value="Red"/>
-                <Setter Property="CornerRadius" Value="50"/>
+                <Setter Property="HeightRequest" Value="{StaticResource RegularSize }"/>
+                <Setter Property="WidthRequest" Value="{StaticResource RegularSize}"/>
+                <Setter Property="CornerRadius" Value="{StaticResource RegularCornerRadius}"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
