@@ -1,6 +1,4 @@
-# UIContactGoogle
-<img src="SC/SelectPersonUI.gif" Width="600" />
-<img src="SC/ScanPerson.gif" Width="600" />
-<img src="SC/DeleteGit.gif" Width="600" />
-<img src="SC/AddPerson.gif" Width="600" />
-<img src="SC/SearchAndPhone.gif" Width="600" />
+# UIContactGoogle MVVM
+<p align="center">
+<img width="300" height:"700" src="ContactPreview.gif" title="Android"/>
+</p>
