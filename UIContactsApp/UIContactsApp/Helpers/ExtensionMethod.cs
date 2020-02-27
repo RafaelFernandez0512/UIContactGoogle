@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UIContactsApp.Models
+namespace UIContactsApp.Helpers
 {
     public static class ExtensionMethod
     {

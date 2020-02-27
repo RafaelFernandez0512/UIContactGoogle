@@ -4,6 +4,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using Xamarin.Forms;
 
 namespace UIContactsApp.iOS
 {
@@ -22,7 +23,14 @@ namespace UIContactsApp.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Device.SetFlags(new[]
+            {
+                "SwipeView_Experimental",
+                "CarouselView_Experimental",
+                "IndicatorView_Experimental"
+            });
             global::Xamarin.Forms.Forms.Init();
+
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             LoadApplication(new App());
 

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace UIContactsApp.Models
+namespace UIContactsApp.Helpers
 {
     public class GroupsContact:ObservableCollection<Person>
     {

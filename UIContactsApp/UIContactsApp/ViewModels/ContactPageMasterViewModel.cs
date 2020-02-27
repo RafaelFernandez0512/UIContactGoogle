@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using UIContactsApp.Models;
+using UIContactsApp.Helpers;
 using UIContactsApp.Views.MasterDetailPages;
 using UIContactsApp.Views.PrincipalPage;
 using Xamarin.Forms;

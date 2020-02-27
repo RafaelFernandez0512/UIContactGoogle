@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UIContactsApp.Models
+namespace UIContactsApp.Helpers
 {
     public class MenuMasterItem
     {

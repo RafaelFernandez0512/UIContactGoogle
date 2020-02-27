@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 using System.Windows.Input;
-using UIContactsApp.Models;
+using UIContactsApp.Helpers;
 using Xamarin.Forms;
 
 namespace UIContactsApp.ViewModels
@@ -19,6 +19,8 @@ namespace UIContactsApp.ViewModels
         public bool IsVisible { get; set; }
         public bool IsVisibleCommand { get; set; }
         public Person Person { get; set; } 
+        const string selectPicture = "Select picture";
+        const string takepicture = "Take a picture";
         public RegisterContactPageViewModel(Person person)
         {
             
@@ -49,7 +51,7 @@ namespace UIContactsApp.ViewModels
 
             });
             TakePhotoCommand = new Command(async() => {
-                var select = await App.Current.MainPage.DisplayActionSheet("chosess image", "Cancel",null,"Select picture","Take a picture");
+                var select = await App.Current.MainPage.DisplayActionSheet("chosess image", "Cancel",null, selectPicture, takepicture);
                 switch (select)
                 {
                     case "Select picture":

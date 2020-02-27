@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Plugin.CurrentActivity;
 using Plugin.Permissions;
+using Xamarin.Forms;
 
 namespace UIContactsApp.Droid
 {
@@ -20,6 +21,8 @@ namespace UIContactsApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+            Forms.SetFlags("SwipeView_Experimental");
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             // y esto
             CrossCurrentActivity.Current.Init(this, savedInstanceState);

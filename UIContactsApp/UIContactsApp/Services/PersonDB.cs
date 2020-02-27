@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UIContactsApp.AppServices;
-using UIContactsApp.Models;
+using UIContactsApp.Helpers;
 using UIContactsApp.Services;
 
 namespace ContactUIAndroid.App.Services

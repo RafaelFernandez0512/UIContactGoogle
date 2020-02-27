@@ -25,12 +25,6 @@ namespace UIContactsApp
         public App()
         {
             InitializeComponent();
-            Device.SetFlags(new[]
-{
-                "SwipeView_Experimental",
-                "CarouselView_Experimental",
-                "IndicatorView_Experimental"
-            });
             MainPage = new NavigationPage(new ContactPage());
         }
 

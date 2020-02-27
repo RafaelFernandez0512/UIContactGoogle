@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace UIContactsApp.Models
+namespace UIContactsApp.Helpers
 {
     public class Person
     {

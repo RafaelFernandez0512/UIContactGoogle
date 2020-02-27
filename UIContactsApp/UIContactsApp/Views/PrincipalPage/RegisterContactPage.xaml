@@ -9,7 +9,9 @@
              x:Class="UIContactsApp.Views.PrincipalPage.RegisterContactPage"
              Title="New Contact">
     <ContentPage.Resources>
+
         <converters:StringToColorHex x:Key="StringToColorHexKey"/>
+
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Save"
@@ -43,14 +45,16 @@
                                                  ImageEntry="ImageUsers"
                                                  SecondTextEntry="{Binding Person.SecondName, Mode=TwoWay}"
                                                  PrefixTextEntry="{Binding Person.NickName, Mode=TwoWay}"/>
-                
+
                 <templatesviews:EntryContactView PlaceHolderEntry="LastName"
                                                  TextEntry="{Binding Person.Lastname, Mode=TwoWay}"/>
+
                 <templatesviews:EntryContactView PlaceHolderEntry="Phone"
                                                  KeyboardEntry="Numeric"
                                                  ImageEntry="ImagePhoneEntry"
                                                  TextEntry="{Binding Person.Phone, Mode=TwoWay}"/>
                 <templatesviews:EntryContactView PlaceHolderEntry="Email"
+                                                 KeyboardEntry="Email"
                                                  ImageEntry="EmailBlackIamage"
                                                  TextEntry="{Binding Person.Email, Mode=TwoWay}"/>
                 <!-- More fields -->

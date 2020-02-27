@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
-using UIContactsApp.Models;
+using UIContactsApp.Helpers;
 using UIContactsApp.Views.PrincipalPage;
 using Xamarin.Forms;
 using ZXing;

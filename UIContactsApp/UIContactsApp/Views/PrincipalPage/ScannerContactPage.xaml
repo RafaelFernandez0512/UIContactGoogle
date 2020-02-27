@@ -21,6 +21,7 @@
                      HeightRequest="135"
                      Opacity="0.8"
                      VerticalOptions="EndAndExpand"/>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

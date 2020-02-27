@@ -5,8 +5,9 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using UIContactsApp.Models;
+using UIContactsApp.Helpers;
 using UIContactsApp.Services;
 using UIContactsApp.Views.PrincipalPage;
 using Xamarin.Forms;
@@ -21,9 +22,9 @@ namespace UIContactsApp.ViewModels
         public ICommand RefreshCommand { get; set; }
         public ICommand CallPersonCommand { get; set; }
         public ICommand ScannerCommand { get; set; }
-         List<GroupsContact> _Groups;
+        List<GroupsContact> _Groups;
         public ObservableCollection<Person> FavoritePersons { get; set; }
-        public ObservableCollection<GroupsContact> GroupsContacts { get; set; } = new ObservableCollection<GroupsContact>();
+        public ObservableCollection<GroupsContact> GroupsContacts { get; set; } 
 
         private Person selectPerson;
 
@@ -56,18 +57,19 @@ namespace UIContactsApp.ViewModels
         {
             ReloadList();
             LoadFavoritePerson();
-            IsRefreshing = false;
             AddPersonCommad = new Command(async () =>
             {
                 await App.Current.MainPage.Navigation.PushAsync(new RegisterContactPage(null));
+                ReloadList();
             });
             EditPersonCommand = new Command<Person>(EditSelectPerson);
-            RefreshCommand = new Command((param) =>
+            RefreshCommand = new Command(() =>
             {
                 IsRefreshing = true;
                 ReloadList();
                 LoadFavoritePerson();
                 IsRefreshing = false;
+
             });
             DeletePersonCommad = new Command(async (param) =>
             {
@@ -89,7 +91,7 @@ namespace UIContactsApp.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public async void ReloadList()
+        async  void ReloadList()
         {
             _Groups = new List<GroupsContact>();
             char[] letter = Enumerable.Range('A', 26).Select(x => (char)x).ToArray();
@@ -101,15 +103,14 @@ namespace UIContactsApp.ViewModels
         }
         public void ListNotEmpty()
         {
-
             var listNoEmpty =( from groups in _Groups where groups.Any() == true select groups).ToList();
             GroupsContacts = new ObservableCollection<GroupsContact>(listNoEmpty);
         }
         public async void LoadFavoritePerson()
         {
-            IsRefreshing = true;
+           
             FavoritePersons = new ObservableCollection<Person>(await App.PersonDB.FavoritePersonAsync());
-            IsRefreshing = false;
+            
         }
         public  void FindPerson(string find)
         {
