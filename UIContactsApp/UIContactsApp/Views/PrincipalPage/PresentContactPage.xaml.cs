@@ -14,10 +14,9 @@ namespace UIContactsApp.Views.PrincipalPage
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PresentContactPage : ContentPage
     {
-        public PresentContactPage(Person person)
+        public PresentContactPage()
         {
             InitializeComponent();
-            BindingContext = new PresentContactPageViewModel(person);
         }
     }
 }

@@ -9,6 +9,8 @@ using Android.OS;
 using Plugin.CurrentActivity;
 using Plugin.Permissions;
 using Xamarin.Forms;
+using Prism;
+using Prism.Ioc;
 
 namespace UIContactsApp.Droid
 {
@@ -27,7 +29,7 @@ namespace UIContactsApp.Droid
             // y esto
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            LoadApplication(new App(new AndroidInitialized()));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -36,5 +38,13 @@ namespace UIContactsApp.Droid
             Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+        public class AndroidInitialized : IPlatformInitializer
+        {
+            public void RegisterTypes(IContainerRegistry containerRegistry)
+            {
+           
+            }
+        }
+
     }
 }

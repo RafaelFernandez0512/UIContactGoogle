@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Prism.Commands;
+using Prism.Navigation;
+using Prism.Navigation.Xaml;
+using Prism.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -7,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using UIContactsApp.AppServices;
 using UIContactsApp.Helpers;
 using UIContactsApp.Services;
 using UIContactsApp.Views.PrincipalPage;
@@ -14,14 +19,14 @@ using Xamarin.Forms;
 
 namespace UIContactsApp.ViewModels
 {
-    public class ContactPageViewModel:INotifyPropertyChanged
+    public class ContactPageViewModel: BaseViewModel,INotifyPropertyChanged
     {
-        public ICommand AddPersonCommad { get; set; }
-        public ICommand DeletePersonCommad { get; set; }
-        public ICommand EditPersonCommand { get; set; }
-        public ICommand RefreshCommand { get; set; }
-        public ICommand CallPersonCommand { get; set; }
-        public ICommand ScannerCommand { get; set; }
+        public DelegateCommand AddPersonCommad { get; set; }
+        public DelegateCommand<Person> DeletePersonCommad { get; set; }
+        public DelegateCommand<Person> EditPersonCommand { get; set; }
+        public DelegateCommand RefreshCommand { get; set; }
+        public DelegateCommand<int> CallPersonCommand { get; set; }
+        public DelegateCommand ScannerCommand { get; set; }
         List<GroupsContact> _Groups;
         public ObservableCollection<Person> FavoritePersons { get; set; }
         public ObservableCollection<GroupsContact> GroupsContacts { get; set; } 
@@ -35,7 +40,7 @@ namespace UIContactsApp.ViewModels
                 if (selectPerson!=value)
                 {
                     selectPerson = value;
-                    EditSelectPerson(SelectPerson);
+                   EditSelectPerson(SelectPerson);
                 }
 
             }
@@ -43,7 +48,8 @@ namespace UIContactsApp.ViewModels
 
         public Person Person { get; set; } = new Person();
 
-        public ICommand FilterCommand => new Command<string>(FindPerson);
+
+        public DelegateCommand<string> FilterCommand => new DelegateCommand<string>(FindPerson);
         bool isRefreshing;
         public bool IsRefreshing
         {
@@ -53,17 +59,19 @@ namespace UIContactsApp.ViewModels
                 isRefreshing = value;
             }
         }
-        public ContactPageViewModel()
+        public ContactPageViewModel(INavigationService navigationService, IPageDialogService dialogService, IPersonDB personDB )  : base(navigationService,dialogService, personDB)
         {
             ReloadList();
             LoadFavoritePerson();
-            AddPersonCommad = new Command(async () =>
+            AddPersonCommad = new DelegateCommand(async () =>
             {
-                await App.Current.MainPage.Navigation.PushAsync(new RegisterContactPage(null));
+               await navigationService.NavigateAsync(ConstPage.RegisterContactPage);
                 ReloadList();
             });
-            EditPersonCommand = new Command<Person>(EditSelectPerson);
-            RefreshCommand = new Command(() =>
+            EditPersonCommand = new DelegateCommand<Person>(async(param)=> {
+                await EditSelectPerson(param);
+            });
+            RefreshCommand = new DelegateCommand(() =>
             {
                 IsRefreshing = true;
                 ReloadList();
@@ -71,26 +79,19 @@ namespace UIContactsApp.ViewModels
                 IsRefreshing = false;
 
             });
-            DeletePersonCommad = new Command(async (param) =>
+            DeletePersonCommad = new DelegateCommand<Person>(async (param) =>
             {
                 var person = (Person)param;
-                await App.PersonDB.DeleteItemAsync(person);
+                await personDB.DeleteItemAsync(person);
                 ReloadList();
             });
-            CallPersonCommand = new Command((param) =>
+            ScannerCommand = new DelegateCommand(async() =>
             {
-                if (!string.IsNullOrEmpty(param.ToString())) {
-                    CallPhone.PlacePhoneCall(param.ToString());
-                }
-            });
-            ScannerCommand = new Command(async() =>
-            {
-                await App.Current.MainPage.Navigation.PushAsync(new ScannerContactPage());
+                await navigationService.NavigateAsync(ConstPage.ScannerContactPage);
             });
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         async  void ReloadList()
         {
             _Groups = new List<GroupsContact>();
@@ -119,13 +120,14 @@ namespace UIContactsApp.ViewModels
             var listNoEmpty = (from groups in GroupsContacts where groups.ToList().Exists(e=>e.NamePerson.Contains(find))select groups).ToList();
             GroupsContacts =  new ObservableCollection<GroupsContact>(listNoEmpty); ;
         }
-        public async void EditSelectPerson(Person person)
+        public async Task EditSelectPerson(Person person)
         {
-            await App.Current.MainPage.Navigation.PushAsync(new PresentContactPage(person));
-        }
-        public async void PresentPersonDate(Person person)
-        {
-            await App.Current.MainPage.Navigation.PushAsync(new PresentContactPage(person));
+            var param = new Prism.Navigation.NavigationParameters
+            {
+                { Person.GetType().Name, person }
+                
+            };
+            await navigationService.NavigateAsync(ConstPage.PresentContactPage,param);
         }
 
     }

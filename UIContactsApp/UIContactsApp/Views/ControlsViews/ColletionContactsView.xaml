@@ -16,6 +16,8 @@
         <RefreshView IsRefreshing="{Binding IsRefreshing}"
                          Command="{Binding RefreshCommand}"
                            Margin="20"
+                     
+                    
                          >
             <StackLayout>
 
@@ -27,8 +29,9 @@
                 <CollectionView ItemsSource="{Binding GroupsContacts}"
                                 IsGrouped="True"
                                 ItemsUpdatingScrollMode="KeepItemsInView"
-                                    VerticalScrollBarVisibility="Always" >
-                    <CollectionView.GroupHeaderTemplate>
+                                    VerticalScrollBarVisibility="Always" 
+                                >
+                    <CollectionView.GroupHeaderTemplate >
                         <DataTemplate>
                             <Label Text="{Binding NameLetter}"
                    TextColor="#4285F4"

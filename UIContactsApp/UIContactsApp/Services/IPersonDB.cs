@@ -13,5 +13,8 @@ namespace UIContactsApp.AppServices
         Task<List<Person>> GetItemsAsync();
         Task<int> SaveItemAsync(Person person);
         Task<int> DeleteItemAsync(Person person);
+        Task<List<Person>> FindItemsAsync(string name);
+        Task<List<Person>> GetGroupsItems(string startWith);
+        Task<List<Person>> FavoritePersonAsync();
     }
 }

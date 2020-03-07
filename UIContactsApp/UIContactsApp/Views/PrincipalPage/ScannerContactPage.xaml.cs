@@ -15,7 +15,6 @@ namespace UIContactsApp.Views.PrincipalPage
         public ScannerContactPage()
         {
             InitializeComponent();
-            BindingContext = new ScannerContactPageViewModel();
         }
     }
 }

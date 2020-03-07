@@ -11,7 +11,6 @@ namespace UIContactsApp.Views.PrincipalPage
         public ContactPage()
         {
             InitializeComponent();
-            BindingContext = new ContactPageViewModel();
         }
     }
 }

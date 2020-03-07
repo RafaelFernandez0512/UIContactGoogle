@@ -14,10 +14,9 @@ namespace UIContactsApp.Views.PrincipalPage
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegisterContactPage : ContentPage
     {
-        public RegisterContactPage(Person person)
+        public RegisterContactPage()
         {
             InitializeComponent();
-            BindingContext = new RegisterContactPageViewModel(person);
             MessagingCenter.Subscribe<RegisterContactPageViewModel, string>(this, "Photo", (param, sender) =>
             {
                 ImagePhoto.Source = sender;

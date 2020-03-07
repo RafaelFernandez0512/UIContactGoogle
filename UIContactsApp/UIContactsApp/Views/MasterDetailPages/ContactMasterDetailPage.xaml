@@ -8,14 +8,7 @@
              xmlns:pages="clr-namespace:UIContactsApp.Views.MasterDetailPages"
              xmlns:pages1="clr-namespace:UIContactsApp.Views.PrincipalPage"
                   NavigationPage.HasNavigationBar="False">
-  <MasterDetailPage.Master>
-    <pages:ContactMasterDetailPageMaster x:Name="MasterPage" />
-  </MasterDetailPage.Master>
-  <MasterDetailPage.Detail>
-    <NavigationPage>
-      <x:Arguments>
-                <pages1:ContactPage/>
-      </x:Arguments>
-    </NavigationPage>
-  </MasterDetailPage.Detail>
+    <MasterDetailPage.Master>
+        <pages:ContactMasterDetailPageMaster x:Name="MasterPage" />
+    </MasterDetailPage.Master>
 </MasterDetailPage>

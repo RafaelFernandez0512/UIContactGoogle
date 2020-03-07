@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Prism;
+using Prism.Ioc;
 using UIKit;
 using Xamarin.Forms;
 
@@ -35,6 +37,13 @@ namespace UIContactsApp.iOS
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
+        }
+        public class IosInitialized : IPlatformInitializer
+        {
+            public void RegisterTypes(IContainerRegistry containerRegistry)
+            {
+               
+            }
         }
     }
 }
